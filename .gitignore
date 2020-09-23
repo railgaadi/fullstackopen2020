@@ -3,3 +3,4 @@ node_modules/
 part3/
 phonebook-backend/
 part4/
+.env
