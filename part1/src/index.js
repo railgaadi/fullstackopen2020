@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
 // EVENT HANDLING REVISTED
-
-
 
 // //COMPLEX STATE
 
@@ -86,7 +84,6 @@ import ReactDOM from 'react-dom';
 // )
 
 // FIRST APP
-
 
 // const Hello = (props) => (
 //   <div>

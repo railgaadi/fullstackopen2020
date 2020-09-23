@@ -65,13 +65,20 @@ const App = () => {
     else {
       event.preventDefault();
       const personObj = { name: newName, number: newNumber };
-      phonebookService.create(personObj).then((newPerson) => {
-        setsMessage(`Added ${newName}`);
-        setPersons(persons.concat(newPerson));
-        setFilterPersons(persons.concat(newPerson));
-        setNewName("");
-        setNewNumber("");
-      });
+      phonebookService
+        .create(personObj)
+        .then((newPerson) => {
+          setsMessage(`Added ${newName}`);
+          setIsFailure(false);
+          setPersons(persons.concat(newPerson));
+          setFilterPersons(persons.concat(newPerson));
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          setsMessage(error.response.data.error);
+          setIsFailure(true);
+        });
     }
   };
 
