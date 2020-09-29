@@ -1,5 +1,5 @@
 node_modules/
 .vscode/
+.env
 part3/
 phonebook-backend/
-part4/
