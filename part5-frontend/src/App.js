@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
-import Note from "./components/Note";
-import noteService from "./services/notes";
-import loginService from "./services/login";
-import Notification from "./components/Notification";
-import NoteForm from "./components/NoteForm";
-import Togglable from "./components/Togglable";
-import LoginForm from "./components/LoginForm";
+import React, { useState, useEffect, useRef } from 'react';
+import Note from './components/Note';
+import noteService from './services/notes';
+import loginService from './services/login';
+import Notification from './components/Notification';
+import NoteForm from './components/NoteForm';
+import Togglable from './components/Togglable';
+import LoginForm from './components/LoginForm';
 
 const App = (props) => {
   const [notes, setNotes] = useState([]);
@@ -22,7 +22,7 @@ const App = (props) => {
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedNoteAppUser");
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
@@ -63,7 +63,7 @@ const App = (props) => {
     try {
       const user = await loginService.login(credentialsObj);
 
-      window.localStorage.setItem("loggedNoteAppUser", JSON.stringify(user));
+      window.localStorage.setItem('loggedNoteAppUser', JSON.stringify(user));
 
       noteService.setToken(user.token);
 
@@ -79,13 +79,13 @@ const App = (props) => {
   };
 
   const loginForm = () => (
-    <Togglable buttonLabel="login">
+    <Togglable buttonLabel='login'>
       <LoginForm attemptLogin={handleLogin} />
     </Togglable>
   );
 
   const noteForm = () => (
-    <Togglable buttonLabel="new note" ref={noteFormRef}>
+    <Togglable buttonLabel='add new note' ref={noteFormRef}>
       <NoteForm createNote={addNote} />
     </Togglable>
   );
@@ -107,7 +107,7 @@ const App = (props) => {
       <Notification message={errorMessage} />
       <h1>Notes</h1>
       <button onClick={() => setShowAll(!showAll)}>
-        {showAll ? "important" : "show all"}
+        {showAll ? 'important' : 'show all'}
       </button>
       {rows()}
       {user === null ? (
