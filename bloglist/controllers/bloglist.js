@@ -1,23 +1,25 @@
-const blogRouter = require("express").Router();
-const Blog = require("../models/bloglist");
-const User = require("../models/users");
-const jwt = require("jsonwebtoken");
+const blogRouter = require('express').Router();
+const Blog = require('../models/bloglist');
+const User = require('../models/users');
+const jwt = require('jsonwebtoken');
 
 //GET ALL
 
-blogRouter.get("/", async (request, response) => {
-  const blogs = await Blog.find({}).populate("user", { username: 1, name: 1 });
+blogRouter.get('/', async (request, response) => {
+  const blogs = await Blog.find({})
+  .populate('user', { username: 1, name: 1 })
+  .populate('comments', { content: 1 });
   response.json(blogs);
 });
 
 //POST ONE
 
-blogRouter.post("/", async (request, response, next) => {
+blogRouter.post('/', async (request, response, next) => {
   const body = request.body;
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
     if (!request.token || !decodedToken.id) {
-      return response.status(401).json({ error: "missing or invalid token" });
+      return response.status(401).json({ error: 'missing or invalid token' });
     }
 
     const user = await User.findById(decodedToken.id);
@@ -41,11 +43,11 @@ blogRouter.post("/", async (request, response, next) => {
 
 //DELETE ONE
 
-blogRouter.delete("/:id", async (request, response, next) => {
+blogRouter.delete('/:id', async (request, response, next) => {
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
     if (!request.token || !decodedToken.id) {
-      return response.status(401).json({ error: "missing or invalid token" });
+      return response.status(401).json({ error: 'missing or invalid token' });
     }
     const requestID = request.params.id;
     const blog = await Blog.findById(requestID);
@@ -56,7 +58,7 @@ blogRouter.delete("/:id", async (request, response, next) => {
     } else {
       response
         .status(401)
-        .json({ error: "you are unauthorized to delete this post" });
+        .json({ error: 'you are unauthorized to delete this post' });
     }
   } catch (error) {
     next(error);
@@ -65,7 +67,7 @@ blogRouter.delete("/:id", async (request, response, next) => {
 
 //UPDATE ONE
 
-blogRouter.put("/:id", async (request, response, next) => {
+blogRouter.put('/:id', async (request, response, next) => {
   try {
     const id = request.params.id;
     const body = request.body;
@@ -82,5 +84,6 @@ blogRouter.put("/:id", async (request, response, next) => {
     next(error);
   }
 });
+
 
 module.exports = blogRouter;

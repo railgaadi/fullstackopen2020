@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
 const blogRouter = require('./controllers/bloglist');
+const commentRouter = require('./controllers/comments');
 const usersRouter = require('./controllers/users');
 const loginRouter = require('./controllers/login');
 const middleware = require('./utils/middleware');
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 app.use(middleware.tokenExtractor);
 
 app.use('/api/blogs', blogRouter);
+app.use('/api/blogs', commentRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 if (process.env.NODE_ENV === 'test') {
